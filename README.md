@@ -1,5 +1,8 @@
 # Walmart Sales Forecasting
-**Predicting weekly retail demand with XGBoost + Explainable AI**
+
+**Predicting weekly retail demand with XGBoost + Explainable AI · Live interactive dashboard**
+
+👉 **[Live Demo](https://walmart-demand-forecasting.onrender.com/)** ← replace with your Render URL
 
 ---
 
@@ -14,21 +17,31 @@ Walmart needs accurate sales forecasts to:
 **Bad forecasts = millions in losses.**
 
 ---
+
 ## 📊 Solution
 
-Built a machine learning forecasting system that predicts weekly sales **16.5% better** than baseline.
+Built a machine learning forecasting system that predicts weekly sales **16.5% better** than baseline — deployed as an interactive Streamlit dashboard.
 
 | Model | MAE | Improvement |
 |---|---|---|
 | Naive Baseline | $1,721 | - |
 | Random Forest | $1,469 | 14.6% |
 | **XGBoost** | **$1,437** | **16.5%** ✅ |
+| **Hybrid (Holiday Model)** | **$1,443** | **16.1%** ✅ |
+
+---
+
+## 🚀 Live Dashboard Features
+
+- 📈 **Store & Department Forecast** — select any of 45 stores and 81 departments, see actual vs predicted sales chart with holiday markers
+- 📊 **Model Performance** — overall MAE, accuracy, holiday vs non-holiday breakdown, top 10 hardest-to-forecast store-dept combos
+- 🧠 **Feature Importance** — interactive SHAP importance chart with adjustable top-N features
 
 ---
 
 ## 🔍 Key Findings
 
-**1. Lag features dominate (68% importance)**
+**1. Lag features dominate (76% importance)**
 - Last week's sales predict this week better than any external factor
 - Weather, economy, promotions = minimal impact
 
@@ -75,7 +88,8 @@ Built a machine learning forecasting system that predicts weekly sales **16.5% b
 
 ### Models
 - XGBoost (300 trees, learning rate 0.05)
-- SHAP for explainability
+- Hybrid holiday model — separate XGBoost trained on holiday weeks only
+- SHAP TreeExplainer for feature importance
 
 ---
 
@@ -92,52 +106,72 @@ Built a machine learning forecasting system that predicts weekly sales **16.5% b
 
 ---
 
-## 🚀 Usage
-```bash
-# Install dependencies
-pip install -r requirements.txt
-# Download data from Kaggle
-# https://www.kaggle.com/datasets/aslanahmedov/walmart-sales-forecast
-# Place CSVs in data/raw/
+## 🗂️ Project Structure
 
-# Run analysis
-cd notebooks
-python walmart_forecast_upgraded.py
 ```
-
-**Output:**
-- Performance metrics
-- SHAP plots
-- Business insights
-- Saved models
-
----
-
-## 📁 Project Structure
-```
-walmart-sales-forecast/
-├── data/raw/              # Kaggle data
+walmart-demand-forecasting/
+├── app.py                 # Streamlit dashboard
+├── train_model.py         # Training script — saves models + val_results
+├── notebooks/             # Original analysis notebook
+├── models/                # Saved .pkl files (XGBoost + SHAP explainer)
+├── data/raw/              # Kaggle CSVs (not committed)
 ├── images/                # Visualizations
-├── notebooks/             # Analysis script
-├── models/                # Saved models
+├── val_results.csv        # Validation predictions used by the app
+├── shap_importance.csv    # SHAP feature importance scores
 ├── requirements.txt
+├── runtime.txt
 └── README.md
 ```
 
 ---
 
-## 🔮 Future Improvements
+## ⚙️ Run Locally
 
-- [ ] Deploy as Streamlit dashboard
-- [ ] Add prediction intervals (uncertainty quantification)
-- [ ] Department-specific models for Dept 92
-- [ ] External data: weather, local events
+```bash
+# 1. Clone the repo
+git clone https://github.com/hasitha165616-pixel/walmart-demand-forecasting.git
+cd walmart-demand-forecasting
+
+# 2. Create virtual environment
+python -m venv venv
+venv\Scripts\activate  # Windows
+source venv/bin/activate  # Mac/Linux
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Download data from Kaggle and place in data/raw/
+# https://www.kaggle.com/datasets/aslanahmedov/walmart-sales-forecast
+# Files needed: train.csv, test.csv, features.csv, stores.csv
+
+# 5. Train the model
+python train_model.py
+
+# 6. Run the app
+streamlit run app.py
+```
 
 ---
 
 ## 🎓 Tech Stack
 
-Python • XGBoost • SHAP • pandas • scikit-learn • matplotlib
+| Component | Technology |
+|---|---|
+| Frontend | Streamlit |
+| Models | XGBoost, Random Forest |
+| Explainability | SHAP TreeExplainer |
+| Data processing | pandas, numpy |
+| Visualisation | matplotlib |
+| Deployment | Render |
+
+---
+
+## 🔮 Future Improvements
+
+- [ ] Add prediction intervals (uncertainty quantification)
+- [ ] Department-specific models for Dept 92
+- [ ] External data: weather, local events
+- [ ] Real-time data pipeline
 
 ---
 
@@ -147,4 +181,4 @@ Python • XGBoost • SHAP • pandas • scikit-learn • matplotlib
 
 ---
 
-**⭐ Star this repo if you found it helpful!**
+⭐ Star this repo if you found it helpful!
