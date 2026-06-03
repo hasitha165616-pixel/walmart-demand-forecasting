@@ -1,12 +1,7 @@
-*.pkl
-data/raw/*.csv
-models/*.pkl
-
-# Python
+data/raw/
+venv/
 __pycache__/
 *.pyc
-.ipynb_checkpoints/
-
-# OS
+.env
 .DS_Store
 Thumbs.db
