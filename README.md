@@ -2,7 +2,7 @@
 
 **Predicting weekly retail demand with XGBoost + Explainable AI · Live interactive dashboard**
 
-👉 **[Live Demo](https://walmart-demand-forecasting.onrender.com/)** ← replace with your Render URL
+👉 **[Live Demo](https://walmart-demand-forecasting.onrender.com/)** 
 
 ---
 
